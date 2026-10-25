@@ -43,10 +43,10 @@ export const AudioPlayButton: React.FC<AudioPlayButtonProps> = ({
 
   const btnPad =
     size === 'sm'
-      ? 'px-2 py-1 text-[11px]'
+      ? 'px-2 py-1 text-[11px] min-h-[34px]'
       : size === 'lg'
-      ? 'px-3.5 py-2 text-sm'
-      : 'px-2.5 py-1.5 text-xs';
+      ? 'px-3.5 py-2 text-sm min-h-[44px]'
+      : 'px-2.5 py-1.5 text-xs min-h-[38px]';
 
   return (
     <div

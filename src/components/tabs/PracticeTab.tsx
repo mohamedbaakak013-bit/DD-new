@@ -117,7 +117,7 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
         CULTURAL_MISTAKE_DARIJA[Math.floor(Math.random() * CULTURAL_MISTAKE_DARIJA.length)];
       setFeedback({
         isCorrect: false,
-        text: `${mistake} الجواب الصحيح: ${currentCard.correctArticle.toUpperCase()} ${
+        text: `${mistake} الجواب: ${currentCard.correctArticle.toUpperCase()} ${
           currentCard.noun
         }!`,
       });
@@ -217,23 +217,25 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
   };
 
   return (
-    <div className="space-y-5">
-      {/* 3-Game Mode Selector Switcher */}
-      <div className="flex items-center bg-white p-1.5 rounded-2xl border-neo shadow-neo gap-1">
+    <div className="space-y-4 sm:space-y-5">
+      {/* 3-Game Mode Selector Switcher (Compact single-line on mobile) */}
+      <div className="flex items-center bg-white p-1 sm:p-1.5 rounded-2xl border-neo shadow-neo gap-1">
         <button
           type="button"
           onClick={() => {
             sound.playTap();
             setActiveSubTab('blitz');
           }}
-          className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-1 sm:gap-2 cursor-pointer min-h-[40px] ${
             activeSubTab === 'blitz'
               ? 'bg-[#FFB800] text-slate-950 shadow-xs'
               : 'text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <Zap className="w-4 h-4 fill-slate-950" />
-          <span>Der/Die/Das Arcade Blitz</span>
+          <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-slate-950 shrink-0" />
+          <span className="truncate">
+            <span className="hidden sm:inline">Der/Die/Das </span>Blitz
+          </span>
         </button>
 
         <button
@@ -242,14 +244,14 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
             sound.playTap();
             setActiveSubTab('speller');
           }}
-          className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-1 sm:gap-2 cursor-pointer min-h-[40px] ${
             activeSubTab === 'speller'
               ? 'bg-[#2563EB] text-white shadow-xs'
               : 'text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <SpellCheck className="w-4 h-4" />
-          <span>التهجئة الرسمية (Buchstabieren)</span>
+          <SpellCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+          <span className="truncate">التهجئة</span>
         </button>
 
         <button
@@ -258,41 +260,41 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
             sound.playTap();
             setActiveSubTab('ai');
           }}
-          className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-2 cursor-pointer ${
+          className={`flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-black font-arabic transition-all flex items-center justify-center gap-1 sm:gap-2 cursor-pointer min-h-[40px] ${
             activeSubTab === 'ai'
               ? 'bg-[#00D68F] text-slate-950 shadow-xs'
               : 'text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <Bot className="w-4 h-4" />
-          <span>أستاذ بوشعيب AI</span>
+          <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+          <span className="truncate">بوشعيب AI</span>
         </button>
       </div>
 
       {/* ================= GAME 1: DER/DIE/DAS ARCADE BLITZ ================= */}
       {activeSubTab === 'blitz' && (
         <div
-          className={`bg-white rounded-3xl border-neo shadow-neo p-5 sm:p-7 space-y-6 ${
+          className={`bg-white rounded-3xl border-neo shadow-neo p-4 sm:p-7 space-y-4 sm:space-y-6 ${
             shake ? 'animate-bounce' : ''
           }`}
         >
           {/* Top Arcade HUD */}
-          <div className="flex items-center justify-between pb-4 border-b-2.5 border-slate-900">
-            <div className="flex items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-[#FFB800] border-neo-2 flex items-center justify-center font-black text-sm">
+          <div className="flex items-center justify-between pb-3 sm:pb-4 border-b-2.5 border-slate-900">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#FFB800] border-neo-2 flex items-center justify-center font-black text-xs sm:text-sm shrink-0">
                 ⚡
               </span>
               <div>
-                <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest block">
-                  Combo Blitz Engine
+                <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest block">
+                  Combo Blitz
                 </span>
-                <div className="flex items-center gap-2">
-                  <span className="font-black text-slate-950 font-bauhaus text-base">
-                    {score} Points
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="font-black text-slate-950 font-bauhaus text-sm sm:text-base">
+                    {score} Pts
                   </span>
                   {combo > 1 && (
-                    <span className="px-2 py-0.5 rounded-lg bg-[#FF3366] text-white font-black font-mono text-xs animate-bounce shadow-neo-sm">
-                      {combo}x COMBO! 🔥
+                    <span className="px-1.5 sm:px-2 py-0.5 rounded-lg bg-[#FF3366] text-white font-black font-mono text-[10px] sm:text-xs animate-bounce shadow-neo-sm">
+                      {combo}x 🔥
                     </span>
                   )}
                 </div>
@@ -301,32 +303,32 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
 
             <UmlautMonster
               reaction={!feedback ? 'neutral' : feedback.isCorrect ? 'happy' : 'shocked'}
-              size={54}
+              size={44}
             />
           </div>
 
           {/* Flashcard Body */}
-          <div className="bg-[#F6F2EA] p-6 sm:p-8 rounded-3xl border-neo shadow-neo text-center space-y-3 relative overflow-hidden">
-            <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider block">
+          <div className="bg-[#F6F2EA] p-4 sm:p-8 rounded-3xl border-neo shadow-neo text-center space-y-2 sm:space-y-3 relative overflow-hidden">
+            <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-500 uppercase tracking-wider block">
               Noun #{cardIndex + 1}
             </span>
 
             {/* German Noun in Big Bauhaus Type */}
             <bdi
               dir="ltr"
-              className="text-3xl sm:text-4xl font-black text-slate-950 font-bauhaus block tracking-tight select-none"
+              className="text-2xl sm:text-4xl font-black text-slate-950 font-bauhaus block tracking-tight select-none"
             >
               {currentCard.noun}
             </bdi>
 
             <div className="flex items-center justify-center gap-2">
-              <span className="text-xs font-mono text-slate-600 bg-white px-3 py-1 rounded-xl border border-slate-900/15">
+              <span className="text-[11px] sm:text-xs font-mono text-slate-600 bg-white px-2.5 py-1 rounded-xl border border-slate-900/15">
                 Plural: {currentCard.plural}
               </span>
               <AudioPlayButton text={currentCard.noun} size="sm" showEqualizer={false} />
             </div>
 
-            <p className="text-sm font-bold font-arabic text-slate-700">
+            <p className="text-xs sm:text-sm font-bold font-arabic text-slate-700">
               {language === 'darija'
                 ? currentCard.meaningDarija
                 : language === 'ar'
@@ -336,19 +338,19 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
 
             {/* Trap Hint */}
             {currentCard.trapHintDarija && (
-              <span className="inline-block text-[11px] font-arabic font-semibold text-amber-900 bg-amber-100/80 px-2.5 py-1 rounded-lg border border-amber-300">
+              <span className="inline-block text-[10px] sm:text-[11px] font-arabic font-semibold text-amber-900 bg-amber-100/80 px-2 sm:px-2.5 py-1 rounded-lg border border-amber-300">
                 💡 {currentCard.trapHintDarija}
               </span>
             )}
           </div>
 
-          {/* Tactile 3D DER / DIE / DAS Smash Buttons */}
-          <div className="grid grid-cols-3 gap-3">
+          {/* Tactile 3D DER / DIE / DAS Smash Buttons (Optimized Thumb Pads) */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <button
               type="button"
               disabled={!!feedback}
               onClick={() => handleArticleClick('der')}
-              className="btn-neo py-4 rounded-2xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-black text-lg sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50"
+              className="btn-neo py-3.5 sm:py-4 rounded-2xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-black text-base sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50 min-h-[52px]"
             >
               DER
             </button>
@@ -357,7 +359,7 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
               type="button"
               disabled={!!feedback}
               onClick={() => handleArticleClick('die')}
-              className="btn-neo py-4 rounded-2xl bg-[#FF3366] hover:bg-[#E11D48] text-white font-black text-lg sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50"
+              className="btn-neo py-3.5 sm:py-4 rounded-2xl bg-[#FF3366] hover:bg-[#E11D48] text-white font-black text-base sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50 min-h-[52px]"
             >
               DIE
             </button>
@@ -366,7 +368,7 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
               type="button"
               disabled={!!feedback}
               onClick={() => handleArticleClick('das')}
-              className="btn-neo py-4 rounded-2xl bg-[#00D68F] hover:bg-[#059669] text-slate-950 font-black text-lg sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50"
+              className="btn-neo py-3.5 sm:py-4 rounded-2xl bg-[#00D68F] hover:bg-[#059669] text-slate-950 font-black text-base sm:text-xl font-bauhaus cursor-pointer shadow-neo disabled:opacity-50 min-h-[52px]"
             >
               DAS
             </button>
@@ -374,9 +376,9 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
 
           {/* Feedback & Next Button */}
           {feedback && (
-            <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-[#F6F2EA] rounded-2xl border-neo gap-3 animate-in fade-in">
+            <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 sm:p-4 bg-[#F6F2EA] rounded-2xl border-neo gap-2.5 sm:gap-3 animate-in fade-in">
               <span
-                className={`text-xs sm:text-sm font-bold font-arabic ${
+                className={`text-xs sm:text-sm font-bold font-arabic text-center sm:text-left rtl:sm:text-right ${
                   feedback.isCorrect ? 'text-emerald-900' : 'text-rose-900'
                 }`}
               >
@@ -386,7 +388,7 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
               <button
                 type="button"
                 onClick={handleNextCard}
-                className="btn-neo py-2 px-5 rounded-xl bg-[#111827] text-white font-bold text-xs font-arabic cursor-pointer shrink-0"
+                className="btn-neo py-2 px-5 rounded-xl bg-[#111827] text-white font-bold text-xs font-arabic cursor-pointer shrink-0 w-full sm:w-auto min-h-[40px]"
               >
                 الكلمة الموالية ➔
               </button>
@@ -397,52 +399,52 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
 
       {/* ================= GAME 2: BUCHSTABIEREN NAME SPELLER ================= */}
       {activeSubTab === 'speller' && (
-        <div className="bg-white rounded-3xl border-neo shadow-neo p-5 sm:p-7 space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b-2.5 border-slate-900">
+        <div className="bg-white rounded-3xl border-neo shadow-neo p-4 sm:p-7 space-y-4 sm:space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b-2.5 border-slate-900 gap-2">
             <div>
-              <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest block">
-                Official German Bureaucracy Tool
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest block">
+                Official German Tool
               </span>
-              <h3 className="text-base sm:text-lg font-black text-slate-950 font-bauhaus">
-                Buchstabiertafel (جدول التهجئة عند القنصلية)
+              <h3 className="text-sm sm:text-lg font-black text-slate-950 font-bauhaus truncate">
+                Buchstabiertafel (التهجئة الرسمية)
               </h3>
             </div>
             <button
               type="button"
               onClick={handleSpeakSpelling}
-              className="btn-neo py-2 px-4 rounded-xl bg-[#FFB800] text-slate-950 font-black text-xs font-mono cursor-pointer inline-flex items-center gap-1.5"
+              className="btn-neo py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl bg-[#FFB800] text-slate-950 font-black text-xs font-mono cursor-pointer inline-flex items-center gap-1.5 shrink-0 min-h-[38px]"
             >
-              <Volume2 className="w-4 h-4" />
-              <span>Nطق بالكامل</span>
+              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span>نطق كامل</span>
             </button>
           </div>
 
           {/* Name Input Field */}
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <label className="block text-xs font-bold font-arabic text-slate-800">
-              اكتب سميتك أو أي كلمة بالفرنسية باش تشوف كيفاش كيتهجاها الموظف الألماني:
+              اكتب سميتك بالفرنسية باش تشوف كيفاش كيهجاها الموظف الألماني:
             </label>
             <input
               type="text"
               value={spellerInput}
               onChange={(e) => setSpellerInput(e.target.value.toUpperCase())}
-              placeholder="مثلاً: MOHAMED, AMINA..."
+              placeholder="MOHAMED, AMINA..."
               maxLength={15}
-              className="w-full px-4 py-3 bg-[#F6F2EA] rounded-2xl border-neo font-bauhaus font-black text-lg text-slate-950 focus:outline-none uppercase tracking-wider"
+              className="w-full px-3.5 py-2.5 sm:py-3 bg-[#F6F2EA] rounded-2xl border-neo font-bauhaus font-black text-base sm:text-lg text-slate-950 focus:outline-none uppercase tracking-wider"
             />
           </div>
 
           {/* Animated Flip-Board Letters */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {getSpelledLetters().map((item, idx) => (
               <div
                 key={idx}
-                className="p-3 bg-[#F6F2EA] rounded-2xl border-neo-2 shadow-neo-sm flex flex-col items-center text-center space-y-1 hover:scale-105 transition-transform"
+                className="p-2.5 sm:p-3 bg-[#F6F2EA] rounded-2xl border-neo-2 shadow-neo-sm flex flex-col items-center text-center space-y-1 hover:scale-105 transition-transform"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#111827] text-white flex items-center justify-center font-black font-bauhaus text-lg">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#111827] text-white flex items-center justify-center font-black font-bauhaus text-base sm:text-lg">
                   {item.letter}
                 </div>
-                <span className="font-black text-xs font-bauhaus text-slate-950">
+                <span className="font-black text-[11px] sm:text-xs font-bauhaus text-slate-950 truncate">
                   wie {item.info.nato}
                 </span>
                 <span className="text-[10px] font-arabic text-slate-600 line-clamp-1">
@@ -457,16 +459,16 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
 
       {/* ================= GAME 3: OSTAZ BOUCHAIB AI TUTOR ================= */}
       {activeSubTab === 'ai' && (
-        <div className="bg-white rounded-3xl border-neo shadow-neo p-5 sm:p-7 space-y-4">
+        <div className="bg-white rounded-3xl border-neo shadow-neo p-4 sm:p-7 space-y-3.5 sm:space-y-4">
           <div className="flex items-center justify-between pb-3 border-b-2.5 border-slate-900">
-            <div className="flex items-center gap-3">
-              <OstazBouchaibMascot mood="teaching" size={46} />
-              <div>
-                <h3 className="text-base font-black text-slate-950 font-arabic">
-                  كشك أستاذ بوشعيب للذكاء الاصطناعي
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <OstazBouchaibMascot mood="teaching" size={40} />
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base font-black text-slate-950 font-arabic truncate">
+                  كشك أستاذ بوشعيب AI
                 </h3>
-                <span className="text-[10px] font-mono text-slate-500">
-                  Witty German explanations in 100% pure Moroccan Darija
+                <span className="text-[10px] font-mono text-slate-500 block truncate">
+                  Witty German explanations in pure Moroccan Darija
                 </span>
               </div>
             </div>
@@ -477,28 +479,28 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
             <button
               type="button"
               onClick={() => handleSendMessage('شنو هو الفرق بين kein و nicht بالدارجة؟')}
-              className="btn-neo px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#FFB800] text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
+              className="btn-neo px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#FFB800] text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
             >
               kein vs nicht؟
             </button>
             <button
               type="button"
               onClick={() => handleSendMessage('كيفاش كيتصرف فعل sein فـ الحاضر والماضي؟')}
-              className="btn-neo px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#00D68F] text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
+              className="btn-neo px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#00D68F] text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
             >
-              تصريف فعل sein؟
+              تصريف sein؟
             </button>
             <button
               type="button"
               onClick={() => handleSendMessage('علاش das Mädchen محايد واخا كتعني بنت؟')}
-              className="btn-neo px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#FF3366] hover:text-white text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
+              className="btn-neo px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#F6F2EA] hover:bg-[#FF3366] hover:text-white text-slate-900 font-bold whitespace-nowrap cursor-pointer text-xs"
             >
               علاش das Mädchen محايد؟
             </button>
           </div>
 
           {/* Chat Messages Log */}
-          <div className="h-64 overflow-y-auto space-y-3 p-3 bg-[#F6F2EA] rounded-2xl border-neo-2">
+          <div className="h-60 sm:h-64 overflow-y-auto space-y-2.5 sm:space-y-3 p-3 bg-[#F6F2EA] rounded-2xl border-neo-2">
             {messages.map((m) => {
               const isUser = m.sender === 'user';
               return (
@@ -506,9 +508,9 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
                   key={m.id}
                   className={`flex items-start gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}
                 >
-                  {!isUser && <OstazBouchaibMascot mood="teaching" size={32} />}
+                  {!isUser && <OstazBouchaibMascot mood="teaching" size={28} className="shrink-0" />}
                   <div
-                    className={`max-w-[80%] p-3 rounded-2xl border-neo-2 shadow-neo-sm text-xs sm:text-sm font-arabic leading-relaxed ${
+                    className={`max-w-[85%] sm:max-w-[80%] p-2.5 sm:p-3 rounded-2xl border-neo-2 shadow-neo-sm text-xs sm:text-sm font-arabic leading-relaxed ${
                       isUser
                         ? 'bg-[#2563EB] text-white rounded-br-xs'
                         : 'bg-white text-slate-950 rounded-bl-xs'
@@ -521,7 +523,7 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
             })}
             {isTyping && (
               <div className="flex items-center gap-2 text-xs font-arabic text-slate-500">
-                <OstazBouchaibMascot mood="thinking" size={28} />
+                <OstazBouchaibMascot mood="thinking" size={24} />
                 <span>أستاذ بوشعيب كيكتب ليك الجواب...</span>
               </div>
             )}
@@ -541,12 +543,12 @@ export const PracticeTab: React.FC<PracticeTabProps> = ({ language, onAddXp }) =
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               placeholder="سول أستاذ بوشعيب أي سؤال فـ الألمانية..."
-              className="flex-1 px-4 py-3 bg-[#F6F2EA] rounded-2xl border-neo font-arabic text-xs sm:text-sm text-slate-950 focus:outline-none"
+              className="flex-1 px-3.5 py-2.5 sm:py-3 bg-[#F6F2EA] rounded-2xl border-neo font-arabic text-xs sm:text-sm text-slate-950 focus:outline-none"
             />
             <button
               type="submit"
               disabled={!inputVal.trim() || isTyping}
-              className="btn-neo p-3 rounded-2xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white cursor-pointer disabled:opacity-40"
+              className="btn-neo p-2.5 sm:p-3 rounded-2xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white cursor-pointer disabled:opacity-40 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
             >
               <Send className="w-4 h-4 rtl:rotate-180" />
             </button>

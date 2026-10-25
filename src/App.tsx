@@ -136,40 +136,49 @@ export default function App() {
   const navItems = [
     {
       id: 'lessons',
-      labelDarija: '🗺️ خريطة الدروس (A1-B2)',
-      labelArabic: '🗺️ خارطة الدروس (A1-B2)',
-      labelEnglish: '🗺️ Roadtrip Map (A1-B2)',
+      labelDarija: 'خريطة الدروس',
+      fullLabelDarija: '🗺️ خريطة الدروس (A1-B2)',
+      labelArabic: 'خارطة الدروس',
+      fullLabelArabic: '🗺️ خارطة الدروس (A1-B2)',
+      labelEnglish: 'Roadtrip Map',
+      fullLabelEnglish: '🗺️ Roadtrip Map (A1-B2)',
       icon: Compass,
       color: '#2563EB',
     },
     {
       id: 'dialogues',
-      labelDarija: '🎭 الحوارات والقصص',
-      labelArabic: '🎭 الحوارات والقصص اليومية',
-      labelEnglish: '🎭 Simulators & Stories',
+      labelDarija: 'الحوارات والقصص',
+      fullLabelDarija: '🎭 الحوارات والقصص اليومية',
+      labelArabic: 'الحوارات والقصص',
+      fullLabelArabic: '🎭 الحوارات والقصص اليومية',
+      labelEnglish: 'Simulators',
+      fullLabelEnglish: '🎭 Simulators & Stories',
       icon: MessageSquare,
       color: '#FF3366',
     },
     {
       id: 'practice',
-      labelDarija: '🎮 ألعاب وتمرن مع AI',
-      labelArabic: '🎮 ألعاب وتدريب مع الذكاء الاصطناعي',
-      labelEnglish: '🎮 Arcade Blitz & AI Tutor',
+      labelDarija: 'ألعاب و AI',
+      fullLabelDarija: '🎮 ألعاب وتمرن مع AI',
+      labelArabic: 'ألعاب و AI',
+      fullLabelArabic: '🎮 ألعاب وتدريب مع الذكاء الاصطناعي',
+      labelEnglish: 'Arcade & AI',
+      fullLabelEnglish: '🎮 Arcade Blitz & AI Tutor',
       icon: Target,
       color: '#00D68F',
     },
   ];
 
-  const getNavLabel = (item: (typeof navItems)[0]) => {
-    if (progress.language === 'darija') return item.labelDarija;
-    if (progress.language === 'ar') return item.labelArabic;
-    return item.labelEnglish;
+  const getNavLabel = (item: (typeof navItems)[0], full = false) => {
+    if (progress.language === 'darija') return full ? item.fullLabelDarija : item.labelDarija;
+    if (progress.language === 'ar') return full ? item.fullLabelArabic : item.labelArabic;
+    return full ? item.fullLabelEnglish : item.labelEnglish;
   };
 
   return (
     <div
       dir={isRtl ? 'rtl' : 'ltr'}
-      className="min-h-screen text-slate-950 flex flex-col font-sans selection:bg-[#FFB800] selection:text-slate-950 pb-28 md:pb-14"
+      className="min-h-screen text-slate-950 flex flex-col font-sans selection:bg-[#FFB800] selection:text-slate-950 pb-28 md:pb-14 overflow-x-hidden"
     >
       {/* Bauhaus x Zellige Sticky Header & Live HUD */}
       <CleanHeader
@@ -180,10 +189,10 @@ export default function App() {
         onStreakClick={() => setShowStreakModal(true)}
       />
 
-      {/* Main Container (max-w-4xl for tactile spacious layout) */}
-      <main className="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-6 py-5 sm:py-7 space-y-6">
-        {/* Tactile 3-Tab Neo-Brutalist Navigation Bar */}
-        <div className="flex items-center bg-white p-1.5 rounded-3xl border-neo shadow-neo gap-1.5 sm:gap-2">
+      {/* Main Container */}
+      <main className="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-7 space-y-4 sm:space-y-6">
+        {/* DESKTOP Top Navigation Bar (Hidden on mobile to save vertical space & respect sticky cap) */}
+        <div className="hidden md:flex items-center bg-white p-1.5 rounded-3xl border-neo shadow-neo gap-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isSelected = activeTab === item.id;
@@ -201,7 +210,7 @@ export default function App() {
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
-                <span className="truncate">{getNavLabel(item)}</span>
+                <span className="truncate">{getNavLabel(item, true)}</span>
               </button>
             );
           })}
@@ -227,8 +236,8 @@ export default function App() {
         )}
       </main>
 
-      {/* Mobile Floating Bottom Bar with Tactile 3D Styling */}
-      <nav className="md:hidden fixed bottom-3 left-3 right-3 z-40 bg-[#F6F2EA]/95 backdrop-blur-md border-neo shadow-neo rounded-3xl p-1.5 flex items-center justify-around">
+      {/* MOBILE Floating Bottom Navigation Bar (Tactile Neo-Brutalist 3D) */}
+      <nav className="md:hidden fixed bottom-2.5 left-2.5 right-2.5 z-40 bg-[#F6F2EA]/95 backdrop-blur-md border-neo shadow-neo rounded-3xl p-1 flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isSelected = activeTab === item.id;
@@ -241,15 +250,13 @@ export default function App() {
                 backgroundColor: isSelected ? item.color : 'transparent',
                 color: isSelected ? '#FFFFFF' : '#111827',
               }}
-              className={`flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 transition-all cursor-pointer ${
-                isSelected ? 'border-neo-2 shadow-neo-sm' : 'text-slate-700'
+              className={`flex-1 py-2 px-1 rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all cursor-pointer min-h-[46px] ${
+                isSelected ? 'border-neo-2 shadow-neo-sm' : 'text-slate-700 hover:text-slate-950'
               }`}
             >
-              <Icon className="w-4 h-4" />
-              <span className="text-[10px] font-black font-arabic line-clamp-1">
-                {progress.language === 'en'
-                  ? item.labelEnglish.split(' ')[1]
-                  : item.labelDarija.split(' ')[1]}
+              <Icon className="w-4 h-4 shrink-0" />
+              <span className="text-[10px] font-black font-arabic truncate max-w-[90px]">
+                {getNavLabel(item, false)}
               </span>
             </button>
           );

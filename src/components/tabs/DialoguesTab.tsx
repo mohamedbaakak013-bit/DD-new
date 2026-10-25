@@ -101,9 +101,9 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 sm:space-y-5">
       {/* 1. Interactive Scenario Horizontal Picker */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none">
         {SIMULATOR_SCENARIOS.map((sc) => {
           const isSelected = selectedScenarioId === sc.id;
           const Icon = getScenarioIcon(sc.id);
@@ -117,11 +117,11 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                 setSelectedScenarioId(sc.id);
                 setRevealedTranslations({});
               }}
-              className={`btn-neo px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer font-arabic ${
+              className={`btn-neo px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer font-arabic min-h-[38px] ${
                 isSelected ? 'bg-[#2563EB] text-white' : 'bg-white text-slate-800 hover:bg-slate-50'
               }`}
             >
-              <Icon className="w-4 h-4 shrink-0" />
+              <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span>{sc.titleGerman.split(':')[0]}</span>
             </button>
           );
@@ -139,11 +139,11 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                 setSelectedScenarioId(st.id);
                 setRevealedTranslations({});
               }}
-              className={`btn-neo px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer font-arabic ${
+              className={`btn-neo px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer font-arabic min-h-[38px] ${
                 isSelected ? 'bg-[#FF3366] text-white' : 'bg-white text-slate-800 hover:bg-slate-50'
               }`}
             >
-              <BookOpen className="w-4 h-4 shrink-0" />
+              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span>{st.titleGerman}</span>
             </button>
           );
@@ -152,25 +152,25 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
 
       {/* 2. MODE A: Interactive Bureaucracy Form (Anmeldung) */}
       {isFormMode && (
-        <div className="bg-white rounded-3xl border-neo shadow-neo p-5 sm:p-7 space-y-5">
+        <div className="bg-white rounded-3xl border-neo shadow-neo p-4 sm:p-7 space-y-4 sm:space-y-5">
           {/* Form Header with Official German Eagle Style */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b-2.5 border-slate-900 gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFB800] border-neo-2 flex items-center justify-center font-black text-xl shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 sm:pb-4 border-b-2.5 border-slate-900 gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#FFB800] border-neo-2 flex items-center justify-center font-black text-lg sm:text-xl shrink-0">
                 🏛️
               </div>
-              <div>
-                <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-widest block">
+              <div className="min-w-0">
+                <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-500 uppercase tracking-widest block truncate">
                   Bundesrepublik Deutschland • Bürgeramt
                 </span>
-                <h3 className="text-base sm:text-lg font-black text-slate-950 font-bauhaus">
+                <h3 className="text-sm sm:text-lg font-black text-slate-950 font-bauhaus truncate">
                   {scenario.titleGerman}
                 </h3>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-slate-700 bg-[#F6F2EA] px-2.5 py-1 rounded-xl border border-slate-900/20">
+            <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+              <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-700 bg-[#F6F2EA] px-2.5 py-1 rounded-xl border border-slate-900/20">
                 +{scenario.xpReward} XP
               </span>
             </div>
@@ -185,18 +185,18 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
           </p>
 
           {/* Actual Fillable Form */}
-          <form onSubmit={handleApproveForm} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <form onSubmit={handleApproveForm} className="space-y-3.5 sm:space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
               <div>
                 <label className="block text-xs font-bold font-mono text-slate-900 mb-1">
-                  1. Familienname / Nachname (النسب / الكنية)
+                  1. Familienname / Nachname (النسب)
                 </label>
                 <input
                   type="text"
                   required
                   value={formFields.nachname}
                   onChange={(e) => setFormFields({ ...formFields, nachname: e.target.value })}
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 />
               </div>
 
@@ -209,7 +209,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                   required
                   value={formFields.vorname}
                   onChange={(e) => setFormFields({ ...formFields, vorname: e.target.value })}
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 />
               </div>
 
@@ -222,7 +222,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                   required
                   value={formFields.geburtsdatum}
                   onChange={(e) => setFormFields({ ...formFields, geburtsdatum: e.target.value })}
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 />
               </div>
 
@@ -237,7 +237,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                   onChange={(e) =>
                     setFormFields({ ...formFields, staatsangehoerigkeit: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 />
               </div>
 
@@ -248,7 +248,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                 <select
                   value={formFields.familienstand}
                   onChange={(e) => setFormFields({ ...formFields, familienstand: e.target.value })}
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 >
                   <option value="ledig">ledig (عازب)</option>
                   <option value="verheiratet">verheiratet (متزوج)</option>
@@ -265,20 +265,20 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                   required
                   value={formFields.adresse}
                   onChange={(e) => setFormFields({ ...formFields, adresse: e.target.value })}
-                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs text-slate-900 focus:outline-none focus:border-[#2563EB]"
+                  className="w-full px-3 py-2 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 font-mono text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#2563EB]"
                 />
               </div>
             </div>
 
             {/* Official Bureaucratic Stamp when Approved */}
             {isFormApproved && (
-              <div className="p-4 bg-[#00D68F]/20 border-2 border-[#00D68F] rounded-2xl flex items-center justify-between gap-3 animate-in zoom-in-95 duration-200">
+              <div className="p-3.5 sm:p-4 bg-[#00D68F]/20 border-2 border-[#00D68F] rounded-2xl flex items-center justify-between gap-3 animate-in zoom-in-95 duration-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-[#00D68F] text-slate-950 border-2 border-slate-950 flex items-center justify-center font-black text-xl rotate-12">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#00D68F] text-slate-950 border-2 border-slate-950 flex items-center justify-center font-black text-lg sm:text-xl rotate-12 shrink-0">
                     ✓
                   </div>
                   <div>
-                    <span className="font-mono font-black text-xs text-emerald-950 uppercase tracking-widest block">
+                    <span className="font-mono font-black text-[11px] sm:text-xs text-emerald-950 uppercase tracking-widest block">
                       AMT BEWILLIGT • EINGETRAGEN
                     </span>
                     <p className="text-xs font-arabic text-emerald-900">
@@ -292,7 +292,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
             <div className="pt-2 flex justify-end">
               <button
                 type="submit"
-                className="btn-neo py-3 px-6 rounded-2xl bg-[#00D68F] hover:bg-[#059669] text-slate-950 font-black text-xs sm:text-sm font-arabic inline-flex items-center gap-2 cursor-pointer"
+                className="btn-neo py-3 px-5 sm:px-6 rounded-2xl bg-[#00D68F] hover:bg-[#059669] text-slate-950 font-black text-xs sm:text-sm font-arabic inline-flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto min-h-[46px]"
               >
                 <Check className="w-4 h-4 stroke-[3]" />
                 <span>ختم الاستمارة واعتماد التسجيل (Bestätigen)</span>
@@ -304,18 +304,18 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
 
       {/* 3. MODE B: WhatsApp-Style Interactive Chat Theatre & Dialogue */}
       {!isFormMode && (
-        <div className="bg-white rounded-3xl border-neo shadow-neo p-5 sm:p-7 space-y-5">
+        <div className="bg-white rounded-3xl border-neo shadow-neo p-4 sm:p-7 space-y-4 sm:space-y-5">
           {/* Header */}
-          <div className="flex items-center justify-between pb-3.5 border-b-2.5 border-slate-900">
-            <div>
-              <span className="text-[11px] font-mono font-bold text-slate-500 uppercase">
+          <div className="flex items-center justify-between pb-3 border-b-2.5 border-slate-900 gap-2">
+            <div className="min-w-0">
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-500 uppercase block truncate">
                 {scenario?.location || 'Berlin Experience'}
               </span>
-              <h3 className="text-base sm:text-lg font-black text-slate-950 font-bauhaus">
+              <h3 className="text-sm sm:text-lg font-black text-slate-950 font-bauhaus truncate">
                 {story ? story.titleGerman : scenario.titleGerman}
               </h3>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <AudioPlayButton
                 text={
                   story
@@ -328,24 +328,24 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
           </div>
 
           {/* Dialogue Steps (Comic / WhatsApp Style) */}
-          <div className="space-y-4">
+          <div className="space-y-3.5 sm:space-y-4">
             {scenario.dialogueSteps?.map((step) => {
               const isRevealed = revealedTranslations[`step-${step.step}`];
 
               return (
-                <div key={step.step} className="space-y-2.5">
+                <div key={step.step} className="space-y-2 sm:space-y-2.5">
                   {/* NPC Speech Bubble */}
-                  <div className="flex items-start gap-2.5 max-w-[85%]">
-                    <span className="text-2xl shrink-0">{step.avatar || '🤖'}</span>
-                    <div className="bg-[#F6F2EA] p-3.5 rounded-2xl border-neo-2 shadow-neo-sm space-y-1">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-[10px] font-mono font-bold text-slate-500">
+                  <div className="flex items-start gap-2 max-w-[94%] sm:max-w-[85%]">
+                    <span className="text-xl sm:text-2xl shrink-0 mt-0.5">{step.avatar || '🤖'}</span>
+                    <div className="bg-[#F6F2EA] p-3 sm:p-3.5 rounded-2xl border-neo-2 shadow-neo-sm space-y-1 flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-mono font-bold text-slate-500 truncate">
                           {step.speaker}
                         </span>
                         <AudioPlayButton text={step.npcSpeechGerman} size="sm" showEqualizer={false} />
                       </div>
 
-                      <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-sm block">
+                      <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-xs sm:text-sm block">
                         {step.npcSpeechGerman}
                       </bdi>
 
@@ -359,7 +359,7 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                       <button
                         type="button"
                         onClick={() => toggleTranslate(`step-${step.step}`)}
-                        className="text-[10px] font-bold text-[#2563EB] hover:underline cursor-pointer block font-arabic pt-0.5"
+                        className="text-[11px] font-bold text-[#2563EB] hover:underline cursor-pointer block font-arabic pt-0.5"
                       >
                         {isRevealed ? 'إخفاء الترجمة' : '💬 ترجمة بالدارجة'}
                       </button>
@@ -367,17 +367,17 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
                   </div>
 
                   {/* User Response Options */}
-                  <div className="space-y-2 pl-8 rtl:pl-0 rtl:pr-8">
+                  <div className="space-y-2 pl-6 rtl:pl-0 rtl:pr-6 sm:pl-8 sm:rtl:pr-8">
                     {step.options.map((opt, oIdx) => (
                       <div
                         key={oIdx}
-                        className="bg-white p-3 rounded-xl border-neo-2 shadow-neo-sm flex items-center justify-between gap-3"
+                        className="bg-white p-2.5 sm:p-3 rounded-xl border-neo-2 shadow-neo-sm flex items-center justify-between gap-2.5"
                       >
-                        <div className="space-y-0.5">
+                        <div className="space-y-0.5 min-w-0">
                           <bdi dir="ltr" className="font-bold text-slate-900 font-mono text-xs sm:text-sm block">
                             {opt.textGerman}
                           </bdi>
-                          <span className="text-xs text-slate-600 font-arabic block">
+                          <span className="text-[11px] sm:text-xs text-slate-600 font-arabic block truncate">
                             {getActiveText(opt)}
                           </span>
                         </div>
@@ -395,26 +395,26 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
               return (
                 <div
                   key={sIdx}
-                  className="p-4 bg-[#F6F2EA] rounded-2xl border-neo-2 shadow-neo-sm space-y-2"
+                  className="p-3.5 sm:p-4 bg-[#F6F2EA] rounded-2xl border-neo-2 shadow-neo-sm space-y-1.5 sm:space-y-2"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-slate-500">
+                    <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-500">
                       #{sIdx + 1}
                     </span>
                     <AudioPlayButton text={sent.german} size="sm" />
                   </div>
-                  <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-sm block">
+                  <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-xs sm:text-sm block">
                     {sent.german}
                   </bdi>
                   {isRevealed && (
-                    <p className="text-xs sm:text-sm text-slate-700 font-arabic pt-2 border-t border-slate-900/10 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-700 font-arabic pt-1.5 border-t border-slate-900/10 leading-relaxed">
                       {getActiveText(sent)}
                     </p>
                   )}
                   <button
                     type="button"
                     onClick={() => toggleTranslate(`story-${sIdx}`)}
-                    className="text-xs font-bold text-[#2563EB] hover:underline cursor-pointer font-arabic"
+                    className="text-[11px] sm:text-xs font-bold text-[#2563EB] hover:underline cursor-pointer font-arabic"
                   >
                     {isRevealed ? 'إخفاء' : 'كشف الشرح بالدارجة'}
                   </button>
@@ -424,21 +424,21 @@ export const DialoguesTab: React.FC<DialoguesTabProps> = ({ language }) => {
           </div>
 
           {/* Vocabulary Loot Box at bottom */}
-          <div className="p-4 bg-[#FFB800] rounded-2xl border-neo shadow-neo text-slate-950 space-y-2">
-            <div className="flex items-center gap-2 font-black font-bauhaus text-xs uppercase">
+          <div className="p-3.5 sm:p-4 bg-[#FFB800] rounded-2xl border-neo shadow-neo text-slate-950 space-y-2">
+            <div className="flex items-center gap-1.5 font-black font-bauhaus text-xs uppercase">
               <Sparkles className="w-4 h-4 text-[#FF3366]" />
-              <span>🎁 Vocabulary Loot Box (كلمات ذهبية)</span>
+              <span>🎁 Vocabulary Loot Box</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono">
-              <div className="p-2 bg-white rounded-xl border border-slate-950">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono">
+              <div className="p-2 bg-white rounded-xl border border-slate-950 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
                 <span className="font-bold block text-slate-950">die Quittung</span>
                 <span className="text-slate-600 font-arabic text-[11px]">التوصيل / Reçu</span>
               </div>
-              <div className="p-2 bg-white rounded-xl border border-slate-950">
+              <div className="p-2 bg-white rounded-xl border border-slate-950 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
                 <span className="font-bold block text-slate-950">zahlen bitte</span>
                 <span className="text-slate-600 font-arabic text-[11px]">بغيت نخلص عافاك</span>
               </div>
-              <div className="p-2 bg-white rounded-xl border border-slate-950">
+              <div className="p-2 bg-white rounded-xl border border-slate-950 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
                 <span className="font-bold block text-slate-950">der Ausweis</span>
                 <span className="text-slate-600 font-arabic text-[11px]">لاكارط ناسيونال</span>
               </div>

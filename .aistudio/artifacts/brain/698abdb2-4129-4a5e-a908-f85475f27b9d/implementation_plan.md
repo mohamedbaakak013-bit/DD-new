@@ -1,112 +1,139 @@
-# Implementation Plan: Bauhaus × Moroccan Zellige Transformation
+# Mobile Adaptation: "Deutsch b'Darija" (Bauhaus × Moroccan Zellige)
 
-Transform **Deutsch b'Darija (دوتش بالدارجة)** into an unforgettable, tactile, portfolio-grade educational application fusing **German Bauhaus geometry** with **Moroccan Zellige craftsmanship**.
-
----
-
-## 1. Brand Identity System & Art Direction ("Bauhaus × Zellige")
-
-### Visual Tokens & Neo-Brutalist 3D Surfaces
-- **Canvas Colors**:
-  - Warm Bauhaus Cream (`#F6F2EA`) for default Light Mode; Deep Obsidian (`#0D1117`) for Dark Mode.
-  - Subtle inline SVG background watermark featuring geometric 8-point Moroccan Zellige stars interlocking with Bauhaus circular/triangular grids.
-- **Color Palette & Grammatical Roles**:
-  - **Majorelle Cobalt (`#2563EB`)**: Brand anchor & `der` masculine badges.
-  - **Autobahn Saffron Gold (`#FFB800`)**: Active states, XP coins, highlights.
-  - **Berliner Pop Coral (`#FF3366`)**: Verb conjugation endings, `die` feminine badges, hot streaks.
-  - **Atay Mint Emerald (`#00D68F`)**: Success states, completed nodes, `das` neuter badges.
-  - **Royal Zellige Purple (`#8B5CF6`)**: `die` plural badge & B2 mastery modules.
-- **Physical 3D Component Tokens**:
-  - Border: `2.5px solid #111827`
-  - Radius: `20px` (`rounded-2xl` to `rounded-3xl`)
-  - Tactile Shadow: `box-shadow: 0 6px 0 #111827`
-  - Hover Transition: `translateY(-3px)`, shadow expands to `0 9px 0 #111827`
-  - Active Press: `translateY(5px)`, shadow compresses to `0 1px 0 #111827`
-- **Typography & Font Pairing**:
-  - Display / Headlines: Google Fonts `'Readex Pro'` and `'Cairo'` for Arabic/Darija; `'Space Grotesk'` for German Bauhaus titles.
-  - Body & Data: `'Plus Jakarta Sans'` for clear reading; `'JetBrains Mono'` for tabular numerals and phonetic guides.
-- **Custom Inline SVG Art & Mascots**:
-  - **Brand Logo**: Geometric fusion of a traditional Moroccan teapot (*Berrad*), Bauhaus round spectacles, and a Bavarian *Brezel* in black, red, gold, and mint.
-  - **Mascot: "Ostaz Bouchaib"**: Illustrated Moroccan teacher with German suspenders and animated eyes/arms that celebrate or react.
-  - **Mascot: "The Umlaut Monster" (Ä, Ö, Ü)**: Playful geometric blob monster whose expressive eyes widen on correct answers and sweat/wobble on incorrect answers.
+Adapt and optimize the tactile, portfolio-grade **"Bauhaus × Moroccan Zellige"** web application so it looks stunning, ergonomic, and effortless to navigate on smartphones (360px–430px viewports) while maintaining the exact same neo-brutalist visual identity, 3D borders, mascots, and sound design.
 
 ---
 
-## 2. Sound Design & Motion Engine
+## User Review & Critical Decisions
 
-### A. Synthesized Web Audio API (`SoundEngine.ts`)
-- Pure client-side Web Audio API synthesizer (no external MP3 downloads):
-  - **`playTap()`**: Crisp 40ms high-Q woodblock/pop click for tabs, card flips, and button clicks.
-  - **`playSuccess()`**: Ascending 4-tone major arpeggio (C5-E5-G5-C6) with sparkling decay + confetti burst.
-  - **`playMistake()`**: Humorous cartoon downward frequency sweep ("boing/buzz").
-  - **`playLevelUp()`**: Euphoric fanfare chord.
-- **Global Sound Mute Toggle (`🔊 / 🔇`)** in the header.
+> [!IMPORTANT]
+> The brand identity, color palette, custom SVG mascots (*Ostaz Bouchaib*, *Umlaut Monster*, *Brand Emblem*), and Web Audio sound synthesizer are preserved 100%. All changes focus strictly on mobile responsiveness, touch hitboxes, and one-handed thumb ergonomics.
 
-### B. Native German Audio Synthesis (`speech.ts`)
-- Dual speed controls: **🔊 1.0x (Native Speed)** and **🐢 0.6x (Slow Breakdown)**.
-- Integrated animated SVG soundwave equalizer pulsing in real time while speaking.
-- Server-side fallback via Gemini TTS if local browser synthesis lacks high-quality German voice packs.
+- **Confirmed Decision 1 (Sticky Header)**: Compact sticky mobile header with streamlined badges (flame streak + XP pill), mute toggle, and an ultra-clean 3-way language switcher (`🇲🇦` | `🇸🇦` | `🇬🇧`) fitting comfortably on 360px screens without horizontal overflow.
+- **Confirmed Decision 2 (Roadtrip Journey Map)**: Full-width lesson cards aligned along an anchored vertical transit track (side-aligned rail with glowing milestone nodes and animated dashes) replacing the desktop snake curve on narrow screens.
+- **Confirmed Decision 3 (Thumb Ergonomics)**: Lesson Studio step navigation and *Der/Die/Das* Arcade Blitz buttons are placed in the bottom thumb reach zone with large $\ge 48\text{px}$ touch targets and active 3D press feedback.
+- **Confirmed Decision 4 (Bottom Navigation Bar)**: Ergonomic floating bottom navigation bar with adequate bottom padding (`pb-28` / safe-area insets) across all tabs so content and action buttons are never obscured.
 
 ---
 
-## 3. Core Screens & Architecture
+## 1. Overview & Mobile Ergonomic Concept
 
-### A. Sticky Brand Header & Hero HUD
-- **Emblem + Typography**: Custom SVG Brand Mark + dual-script typography.
-- **Gamification HUD**:
-  - Animated Flame Streak (`🔥`), spinning Zellige Star XP counter (`⭐`), and Audio Toggle (`🔊`).
-  - **Tactile 3-Way Language Pill (`🇲🇦 الدارجة` | `🇸🇦 العربية` | `🇬🇧 English`)**: Switches active explanation language cleanly with zero multi-language visual clutter.
-  - **"Brand Identity & UI Kit Showcase" (`🎨 Brand Identity`)**: Opens an interactive modal displaying Logo Construction geometry, Bauhaus × Zellige swatches, typography hierarchy, and mascot states.
-
-### B. Tab 1: 🗺️ The "Casa-to-Berlin" Interactive Journey Map (Lessons A1–B2)
-- **Winding Roadtrip SVG Transit Line**:
-  - Sinuous animated SVG path curving down the screen, connecting level waypoints like a high-speed express route from Casablanca Mohammed V Airport to Berlin Brandenburg.
-- **World Level Switcher**:
-  - `🛫 A1: كازا -> برلين (The Takeoff)`
-  - `🥨 A2: الحياة فـ ألمانيا (Street Survival)`
-  - `⚙️ B1: بلا فلسفة (Fluency Engine)`
-  - `👑 B2: معلم بالدارجة والألمانية (Boss Level)`
-- **Interactive Lesson Nodes**:
-  - Tactile 3D cards along the path with custom badge icons, German title, Darija/Arabic/English subtitle, XP reward tag, and `"Start / دخل تقرا"` button.
-- **Complete Pre-loaded Curriculum**:
-  - **A1**: Alphabet & Official Spelling Table, Pronunciation Secrets (The 3 'R's, 'ch' Chameleon, terminal b/d/g hardening), Personal Pronouns & Verb Conjugation, Der/Die/Das & Negation, Numbers/24h Clock/W-Fragen, Everyday Foods.
-  - **A2**: Trennbare Verben (with interactive launch animation), Modalverben Battle, Wechselpräpositionen (Static Dativ vs. Movement Akkusativ), Reflexive Verben.
-  - **B1**: Nebensätze (Verb Kickers `weil/dass/obwohl`), Zeitformen (Spoken Perfekt vs. Präteritum & Futur I).
-  - **B2**: Deutsche Bürokratie (Compound noun gender rule, Einwohnermeldeamt forms), Workplace Idioms & Redewendungen.
-
-### C. Interactive Step-by-Step Lesson Studio (`CleanLessonPlayer.tsx`)
-- Distraction-free, single-card player with:
-  1. **Top Progress Tracker** + Mascot cheer banner.
-  2. **Slide 1 (Concept Hook)**: Comic-style card with mascot and funny cultural explanation.
-  3. **Slide 2 (Interactive Lab)**: Clickable 1.0x / 0.6x audio, gender color pills, crimson verb endings, and interactive **Verb Splitter** launch button.
-  4. **Slide 3 (Trap Alert)**: High-contrast Saffron warning card for common mistakes.
-  5. **Slide 4 (Interactive Challenge)**: Gamified multiple choice & reordering with Web Audio feedback, mascot reactions, and celebratory XP tally.
-
-### D. Tab 2: 🎭 Real-Life Simulators & Story Podcasts (`DialoguesTab.tsx`)
-- **Simulators**:
-  - *Im Supermarkt (Lidl Cashier Speedrun)*
-  - *Am Bahnhof (Deutsche Bahn Delay Survival)*
-  - *Im Restaurant (Schnitzel & Drink Ordering)*
-  - *Beim Arzt & Apotheke*
-  - *Interactive Bureaucracy Form: Anmeldung bei der Meldebehörde* with live field checks!
-- **Interactive Chat Theatre**:
-  - WhatsApp/Comic bubbles with speaker avatars, audio speed toggles, tap-to-reveal translation in the active language, and a **Vocabulary Loot Box**.
-
-### E. Tab 3: 🎮 Arcade & Ostaz Bouchaib AI (`PracticeTab.tsx`)
-- **Game 1: "Der / Die / Das" Arcade Blitz**:
-  - 30-second countdown blitz, combo multiplier ($1\times \to 4\times$), tactile 3D Blue (`DER`), Pink (`DIE`), and Green (`DAS`) arcade buttons, screen-shake, and particle feedback.
-- **Game 2: "Buchstabieren" Official German Administrative Name Speller**:
-  - Input field for any user name, generating the official German spelling table (*M wie Martha, O wie Otto*) with flip-board letters and German audio pronunciation.
-- **Ostaz Bouchaib AI Tutor**:
-  - Styled retro-futuristic chat booth with instant prompt pills and witty, culturally grounded explanations.
+- **What It Delivers**: A mobile-first, tactile language learning experience tailored for one-handed smartphone use. Cards, buttons, audio speed triggers, and quizzes feel like a physical handheld gadget without clipping, horizontal scrollbars, or cramped text.
+- **Target Audience / Persona**: Moroccan and Arabic speakers on the go (commuting, on mobile data, studying on iPhone/Android devices) wanting fast, fun German lessons (A1–B2) with instant audio and clear cultural humor.
+- **Key Value**: Retains the distinctive, artful "Bauhaus × Zellige" neo-brutalism while feeling like a native iOS/Android educational app.
 
 ---
 
-## 4. Verification Plan
-- **Type Checking & Linting**: Run `lint_applet` (`tsc --noEmit`) to verify strict TypeScript adherence with zero missing types.
-- **Build Verification**: Run `compile_applet` (`npm run build`) to ensure successful Vite bundling.
-- **Interactive Testing**:
-  - Verify Web Audio sound engine triggers tactile clicks and victory arpeggios correctly without console errors.
-  - Verify 1.0x and 0.6x German speech synthesis.
-  - Verify 3-way language switching cleanly displays only the chosen language.
-  - Test the "Brand Identity & UI Kit Showcase" modal for smooth presentation.
+## 2. Mobile User Experience & Visual Layout Adaptation
+
+```
+┌────────────────────────────────────────────────────────┐
+│ [🇩🇪🇲🇦 Logo]  🔥 3   ⭐ 120   [🔊]  [🇲🇦|🇸🇦|🇬🇧]          │ <- Compact Top Bar (54px)
+├────────────────────────────────────────────────────────┤
+│  [ 🛫 A1 ]   [ 🥨 A2 ]   [ ⚙️ B1 ]   [ 👑 B2 ]          │ <- Horizontal Level Bar
+├────────────────────────────────────────────────────────┤
+│  │                                                     │
+│  ●── [ Card 1: Alphabet & Phonetics       ] [Start]    │ <- Roadside Transit Rail
+│  │   XP: +25 · 🔊 1.0x / 0.6x                          │    with Milestone Dots
+│  │                                                     │
+│  ●── [ Card 2: Personal Pronouns & Sein   ] [Start]    │
+│  │   XP: +30 · 5 Min                                   │
+│  │                                                     │
+│  ▼                                                     │
+├────────────────────────────────────────────────────────┤
+│       [ 📚 الدروس ]    [ 💬 الحوارات ]    [ 🎯 تمرن ]   │ <- Floating Bottom Nav
+└────────────────────────────────────────────────────────┘
+```
+
+### A. Compact Sticky Header (`CleanHeader.tsx`)
+- **Single-Line Responsive Top Bar**:
+  - Left / Brand: Compact logo emblem (34px) + title text that truncates or stays compact (`text-sm font-bold`).
+  - Center / Stats: Consolidated pill combining Streak (`🔥 3`) and XP (`⭐ 120`) to save horizontal real estate on sub-390px screens.
+  - Sound & Theme: Compact tactile audio toggle icon button ($\ge 44\text{px}$ hitbox).
+  - Language Switcher: 3-way segmented pill using country flags (`🇲🇦` | `🇸🇦` | `🇬🇧`) on mobile, expanding to full labels on wider screens.
+- **Strict 15% Sticky Cap**: Header height stays under 56px, preserving >85% of screen height for learning content.
+
+### B. "Casa-to-Berlin" Roadtrip Journey Map (`LessonsTab.tsx`)
+- **Vertical Roadside Transit Track**:
+  - On mobile (`< 640px`), instead of a hidden or clipped SVG wave, render an anchored vertical transit track (2.5px solid dark line with dashed styling) running along the leading edge (left in LTR, right in RTL).
+  - Each milestone node anchors directly to the transit line with a 36px circular badge (`🛫`, `🥨`, `⚙️`, `👑`, or checkmark if completed).
+  - Full-width Bento cards stretch comfortably to the remaining width with generous touch padding.
+- **Scrollable Level Selector**:
+  - Horizontal swipeable pill bar for A1, A2, B1, and B2 with clean snap behavior and active Gold accent.
+
+### C. Step-by-Step Lesson Studio (`CleanLessonPlayer.tsx`)
+- **Bottom Thumb Action Bar**:
+  - The "Next / التالي" and "Back / السابق" buttons are anchored into a bottom sticky bar (`sticky bottom-0 p-3 bg-white/95 backdrop-blur-md border-t-2 border-slate-900`) with large 48px hitboxes.
+- **Sound & Grammar Lab**:
+  - Audio speed buttons (`🔊 1.0x` and `🐢 0.6x`) rendered with high-contrast colored borders and min-h 44px for easy thumb tapping.
+  - Interactive **Verb Splitter cannon** (`aufstehen` -> `stehe ... auf!`) reformatted into stacked responsive cards so prefixes don't clip on 360px screens.
+- **Quiz Card**:
+  - Large full-width vertical option buttons with `active:translate-y-1` tactile feedback and instant audio confirmation.
+
+### D. Arcade Blitz & Bureaucracy Form (`PracticeTab.tsx` & `DialoguesTab.tsx`)
+- **Der / Die / Das Arcade Blitz**:
+  - 3 large, full-width thumb pads arranged in an ergonomic 3-column grid directly under the German noun card:
+    - **`DER` (Majorelle Cobalt `#2563EB`)**
+    - **`DIE` (Berliner Pop Coral `#FF3366`)**
+    - **`DAS` (Atay Mint Emerald `#00D68F`)**
+  - Minimum button height of 56px with bold typography and instant Web Audio feedback.
+- **Anmeldung Bureaucracy Form**:
+  - Form fields arranged in a clean single-column mobile stack with clear Arabic/Darija labels, helper tooltips, and big "Validate & Stamp / فحص وتوثيق" button.
+- **WhatsApp Comic Chat Simulator**:
+  - Chat bubbles sized appropriately for mobile screens (max-w 85%), with tap-to-listen audio icons and tap-to-reveal translation cards.
+
+### E. Floating Bottom Navigation & Safe Areas (`App.tsx`)
+- Floating 3-tab bar elevated with `shadow-neo` and safe-area inset (`env(safe-area-inset-bottom)`).
+- All scrollable main views have `pb-32` to guarantee zero overlap between bottom card buttons and the floating navigation.
+
+---
+
+## 3. Key Product Decisions & Trade-Offs
+
+- **Decision 1: Side-Anchored Transit Track vs. Snake Curve on Mobile**
+  - *Chosen*: Side-anchored vertical rail on mobile screens (`< 640px`) and sinuous SVG snake on desktop (`sm:block`).
+  - *Why*: Horizontal zig-zagging on 360px–390px phones leaves lesson cards cramped into tiny 140px boxes. A side-anchored rail gives cards 100% of usable reading width while preserving the transit journey motif.
+- **Decision 2: Flag-Only Language Pill on Small Screens**
+  - *Chosen*: Flag emojis (`🇲🇦` | `🇸🇦` | `🇬🇧`) on mobile viewports; flags + labels (`🇲🇦 الدارجة`) on desktop (`sm:`).
+  - *Why*: Prevents header wrapping or awkward multi-line stacks on narrow devices while keeping the 3-way toggle immediately recognizable.
+- **Decision 3: Sticky Bottom CTA for Lesson Player**
+  - *Chosen*: Pin primary progression buttons to the player viewport bottom.
+  - *Why*: In multi-slide lessons, users should never need to scroll down just to click "Next". The action is always within natural thumb reach.
+
+---
+
+## 4. Technical Architecture & Layout Hierarchy
+
+```
+┌────────────────────────────────────────────────────────┐
+│                        App.tsx                         │
+│  ├─ CleanHeader.tsx (Compact 54px Mobile Bar)          │
+│  │    ├─ Brand Emblem + Title                          │
+│  │    ├─ Combined Streak & XP Badge                    │
+│  │    ├─ Web Audio Mute Toggle                         │
+│  │    └─ 3-Way Language Segmented Pill                 │
+│  │                                                     │
+│  ├─ Active Tab View Container (pb-32 safe-area)        │
+│  │    ├─ LessonsTab: Side-Rail Roadtrip + Bento Cards  │
+│  │    ├─ DialoguesTab: Mobile Form + Chat Simulator    │
+│  │    └─ PracticeTab: 3-Pad Blitz + Name Speller + AI  │
+│  │                                                     │
+│  ├─ Floating Bottom Navigation (3 Tabs, h-16)          │
+│  │                                                     │
+│  └─ Modals (Lesson Player, Streak Celebration, Kit)    │
+│       └─ Max-H 90vh, Bottom Sticky Action Buttons      │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 5. Verification Plan
+
+1. **Static Analysis & Compilation**:
+   - Run `lint_applet` (`tsc --noEmit`) to verify zero type mismatches or syntax issues.
+   - Run `compile_applet` (`npm run build`) to verify Vite bundling.
+2. **Viewport Responsiveness Checks**:
+   - Test at standard mobile viewports: 360px (Galaxy S), 375px (iPhone SE), 390px (iPhone 13/14), 430px (iPhone Pro Max).
+   - Verify zero horizontal scrolling (`overflow-x-hidden`) on mobile viewports.
+   - Check that all buttons, audio toggles, and quiz choices have $\ge 44\text{px}$ touch targets.
+   - Verify proper RTL alignment when Darija or Arabic is active and LTR alignment for German texts.

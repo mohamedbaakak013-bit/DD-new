@@ -30,7 +30,7 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
   onClose,
   onComplete,
 }) => {
-  // 4 Steps: 0: Concept Intro, 1: Interactive Lab & Verb Splitter, 2: Trap Alert, 3: Interactive Quiz
+  // 4 Steps: 0: Concept Hook, 1: Interactive Lab & Verb Splitter, 2: Trap Alert, 3: Interactive Quiz
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedQuizAnswer, setSelectedQuizAnswer] = useState<string | null>(null);
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
@@ -46,7 +46,6 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
     module.slides.find((s) => s.type === 'grammar') || module.slides[1] || introSlide;
   const vocabSlide =
     module.slides.find((s) => s.vocabList && s.vocabList.length > 0) || module.slides[2];
-  const conjugationSlide = module.slides.find((s) => s.conjugationData);
   const quizSlide = module.slides.find((s) => s.quiz) || module.slides[module.slides.length - 1];
 
   const handleNext = () => {
@@ -74,7 +73,7 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
   const handlePrev = () => {
     sound.playTap();
     if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
+      setCurrentStep((prev) => prev + 1);
     }
   };
 
@@ -109,24 +108,24 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
 
   const stepTitles = [
     {
-      darija: '1. الفكرة الأساسية مع أستاذ بوشعيب',
-      ar: '1. الفكرة الأساسية مع أستاذ بوشعيب',
+      darija: '1. الفكرة مع أستاذ بوشعيب',
+      ar: '1. الفكرة مع أستاذ بوشعيب',
       en: '1. Concept Hook & Context',
     },
     {
       darija: '2. مختبر النطق والقواعد التفاعلي',
       ar: '2. مختبر النطق والقواعد التفاعلي',
-      en: '2. Interactive Sound & Grammar Lab',
+      en: '2. Interactive Lab',
     },
     {
       darija: '3. رد بالك من الفخ! (Achtung)',
       ar: '3. احذر من الفخ الشائع! (Achtung)',
-      en: '3. Common Learner Trap (Achtung)',
+      en: '3. Common Learner Trap',
     },
     {
       darija: '4. تحدي الفهم ونقاط XP',
       ar: '4. تحدي الفهم ونقاط الخبرة',
-      en: '4. Mastery Quiz & XP Challenge',
+      en: '4. Mastery Quiz Challenge',
     },
   ];
 
@@ -135,7 +134,7 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
       role="dialog"
       aria-modal="true"
       dir={isRtl ? 'rtl' : 'ltr'}
-      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-2 sm:p-5 overflow-y-auto"
       onClick={() => {
         sound.playTap();
         onClose();
@@ -143,21 +142,21 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#F6F2EA] rounded-3xl border-neo shadow-neo w-full max-w-xl flex flex-col max-h-[92vh] overflow-hidden my-auto"
+        className="bg-[#F6F2EA] rounded-3xl border-neo shadow-neo w-full max-w-xl flex flex-col max-h-[90vh] sm:max-h-[92vh] overflow-hidden my-auto"
       >
         {/* Top Header with Bauhaus Progress Bar & Mascot Cheer */}
-        <div className="p-4 bg-white border-b-2.5 border-slate-900 flex items-center justify-between gap-3 shrink-0">
-          <div className="flex items-center gap-3 flex-1">
-            <OstazBouchaibMascot mood={currentStep === 3 ? 'happy' : 'teaching'} size={42} />
-            <div className="flex-1">
-              <div className="flex items-center justify-between text-xs font-black text-slate-900 mb-1 font-mono">
-                <span>
-                  {module.worldId} • Station #{module.moduleNumber}
+        <div className="p-3 sm:p-4 bg-white border-b-2.5 border-slate-900 flex items-center justify-between gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <OstazBouchaibMascot mood={currentStep === 3 ? 'happy' : 'teaching'} size={36} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs font-black text-slate-900 mb-1 font-mono">
+                <span className="truncate">
+                  {module.worldId} • #{module.moduleNumber}
                 </span>
-                <span>Step {currentStep + 1} / 4</span>
+                <span className="shrink-0">{currentStep + 1} / 4</span>
               </div>
               {/* Tactile Progress Segmented Bar */}
-              <div className="w-full bg-[#F6F2EA] h-3 rounded-full border-2 border-slate-900 overflow-hidden p-0.5">
+              <div className="w-full bg-[#F6F2EA] h-2.5 sm:h-3 rounded-full border-2 border-slate-900 overflow-hidden p-0.5">
                 <div
                   className="bg-[#FFB800] h-full rounded-full transition-all duration-300"
                   style={{ width: `${((currentStep + 1) / 4) * 100}%` }}
@@ -172,43 +171,45 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
               sound.playTap();
               onClose();
             }}
-            className="w-9 h-9 rounded-xl bg-white border-neo-2 shadow-neo-sm flex items-center justify-center hover:bg-slate-100 cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white border-neo-2 shadow-neo-sm flex items-center justify-center hover:bg-slate-100 cursor-pointer shrink-0"
           >
             <X className="w-4 h-4 text-slate-950" />
           </button>
         </div>
 
         {/* Step Kicker */}
-        <div className="px-5 pt-3 pb-1 flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-950 font-arabic bg-white px-2.5 py-1 rounded-xl border border-slate-900/20">
+        <div className="px-4 sm:px-5 pt-2.5 pb-1 flex items-center justify-between">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-950 font-arabic bg-white px-2.5 py-1 rounded-xl border border-slate-900/20 truncate">
             {language === 'en'
               ? stepTitles[currentStep].en
               : language === 'ar'
               ? stepTitles[currentStep].ar
               : stepTitles[currentStep].darija}
           </span>
-          <span className="text-xs font-mono font-bold text-slate-700">+{module.xpReward} XP</span>
+          <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-700 shrink-0">
+            +{module.xpReward} XP
+          </span>
         </div>
 
         {/* Focused Interactive Card Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4">
+        <div className="p-3.5 sm:p-6 overflow-y-auto flex-1 space-y-3 sm:space-y-4">
           {/* ================= STEP 1: CONCEPT HOOK ================= */}
           {currentStep === 0 && (
-            <div className="space-y-4 animate-in fade-in duration-200">
-              <div className="bg-white p-5 rounded-2xl border-neo shadow-neo-sm space-y-3">
+            <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-200">
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <bdi
                     dir="ltr"
-                    className="text-lg sm:text-xl font-black text-slate-950 font-bauhaus"
+                    className="text-base sm:text-xl font-black text-slate-950 font-bauhaus"
                   >
                     {module.titleGerman}
                   </bdi>
                 </div>
 
                 {introSlide?.storyContext && (
-                  <div className="p-3.5 bg-[#F6F2EA] rounded-xl border-2 border-slate-900/15 text-xs sm:text-sm text-slate-800 leading-relaxed font-arabic">
+                  <div className="p-3 sm:p-3.5 bg-[#F6F2EA] rounded-xl border-2 border-slate-900/15 text-xs sm:text-sm text-slate-800 leading-relaxed font-arabic">
                     <div className="flex items-center gap-1.5 font-bold text-slate-950 mb-1">
-                      <span className="text-base">🎙️</span>
+                      <span className="text-sm sm:text-base">🎙️</span>
                       <span>
                         {introSlide.storyContext.speaker === 'Bouchaib'
                           ? 'بوشعيب فـ برلين:'
@@ -234,13 +235,13 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
 
           {/* ================= STEP 2: INTERACTIVE LAB & VERB SPLITTER ================= */}
           {currentStep === 1 && (
-            <div className="space-y-4 animate-in fade-in duration-200">
+            <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-200">
               {/* If Separable Verbs: Show Interactive Launch Splitter */}
               {module.id.includes('a2') || module.titleGerman.toLowerCase().includes('trennbar') ? (
-                <div className="bg-white p-4 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold font-bauhaus text-slate-900 uppercase">
-                      🚀 The Verb Splitter Cannon (صاروخ الأفعال المنفصلة)
+                <div className="bg-white p-3.5 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-2.5 sm:space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] sm:text-xs font-bold font-bauhaus text-slate-900 uppercase">
+                      🚀 Verb Splitter (الأفعال المنفصلة)
                     </span>
                     <button
                       type="button"
@@ -248,35 +249,35 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
                         sound.playTap();
                         setIsVerbSplit(!isVerbSplit);
                       }}
-                      className="btn-neo py-1 px-3 rounded-lg bg-[#FFB800] text-slate-950 font-bold text-xs font-arabic cursor-pointer inline-flex items-center gap-1"
+                      className="btn-neo py-1 px-2.5 sm:px-3 rounded-lg bg-[#FFB800] text-slate-950 font-bold text-xs font-arabic cursor-pointer inline-flex items-center gap-1 shrink-0"
                     >
                       {isVerbSplit ? <RotateCcw className="w-3.5 h-3.5" /> : <Rocket className="w-3.5 h-3.5" />}
-                      <span>{isVerbSplit ? 'إعادة التركيب' : 'فجّر الفعل!'}</span>
+                      <span>{isVerbSplit ? 'إعادة' : 'فجّر الفعل!'}</span>
                     </button>
                   </div>
 
-                  <p className="text-xs text-slate-600 font-arabic">
-                    فـ الألمانية، الأفعال المنفصلة (Trennbare Verben) كيطير البريفيكس ديالهم لآخر الجملة!
+                  <p className="text-[11px] sm:text-xs text-slate-600 font-arabic">
+                    فـ الألمانية، الأفعال المنفصلة كيطير البريفيكس ديالهم لآخر الجملة!
                   </p>
 
-                  <div className="p-4 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 text-center select-none font-mono text-sm sm:text-base">
+                  <div className="p-3 sm:p-4 bg-[#F6F2EA] rounded-xl border-2 border-slate-900 text-center select-none font-mono text-xs sm:text-base">
                     {!isVerbSplit ? (
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="flex flex-wrap items-center justify-center gap-1">
                         <span className="px-2 py-1 bg-[#FF3366] text-white rounded-lg font-bold">
                           auf
                         </span>
                         <span className="px-2 py-1 bg-[#2563EB] text-white rounded-lg font-bold">
                           stehen
                         </span>
-                        <span className="text-slate-500 text-xs ml-2">(Infinitiv = يستيقظ)</span>
+                        <span className="text-slate-500 text-[11px] ml-1">(Infinitiv = يستيقظ)</span>
                       </div>
                     ) : (
-                      <div className="flex flex-wrap items-center justify-center gap-2 animate-in zoom-in-95 duration-200">
+                      <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 animate-in zoom-in-95 duration-200">
                         <span className="font-bold text-slate-900">Ich</span>
                         <span className="px-2 py-1 bg-[#2563EB] text-white rounded-lg font-bold">
                           stehe
                         </span>
-                        <span className="text-slate-700 font-semibold">um 7:00 Uhr</span>
+                        <span className="text-slate-700 font-semibold">um 7 Uhr</span>
                         <span className="px-2.5 py-1 bg-[#FF3366] text-white rounded-lg font-black animate-bounce shadow-neo-sm">
                           AUF! 🚀
                         </span>
@@ -290,13 +291,12 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
               ) : null}
 
               {/* Interactive Examples List */}
-              <div className="bg-white p-4 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-3">
-                <span className="text-xs font-bold font-bauhaus text-slate-900 uppercase block">
-                  🔊 German Audio & Gender Visualizer
+              <div className="bg-white p-3.5 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-2.5 sm:space-y-3">
+                <span className="text-[11px] sm:text-xs font-bold font-bauhaus text-slate-900 uppercase block">
+                  🔊 German Audio & Examples
                 </span>
 
-                <div className="space-y-2.5">
-                  {/* Alphabet or Vocab Examples */}
+                <div className="space-y-2">
                   {(grammarSlide?.alphabetData?.slice(0, 4) || [
                     {
                       letter: 'W',
@@ -322,17 +322,17 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
                   ]).map((item: any, idx: number) => (
                     <div
                       key={idx}
-                      className="p-3 bg-[#F6F2EA] rounded-xl border-2 border-slate-900/15 flex items-center justify-between gap-3"
+                      className="p-2.5 sm:p-3 bg-[#F6F2EA] rounded-xl border-2 border-slate-900/15 flex items-center justify-between gap-2.5"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-[#FFB800] border-neo-2 text-slate-950 flex items-center justify-center font-black font-mono text-sm shrink-0">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#FFB800] border-neo-2 text-slate-950 flex items-center justify-center font-black font-mono text-xs sm:text-sm shrink-0">
                           {item.letter || idx + 1}
                         </div>
-                        <div>
-                          <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-sm block">
+                        <div className="min-w-0">
+                          <bdi dir="ltr" className="font-bold text-slate-950 font-mono text-xs sm:text-sm block truncate">
                             {item.germanExample || item.letter}
                           </bdi>
-                          <span className="text-xs text-slate-600 font-arabic">
+                          <span className="text-[11px] sm:text-xs text-slate-600 font-arabic truncate block">
                             {language === 'darija'
                               ? item.darijaNote || item.note
                               : language === 'ar'
@@ -351,20 +351,20 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
 
           {/* ================= STEP 3: TRAP ALERT ================= */}
           {currentStep === 2 && (
-            <div className="space-y-4 animate-in fade-in duration-200">
-              <div className="bg-[#FFB800] p-5 rounded-2xl border-neo shadow-neo text-slate-950 space-y-3">
-                <div className="flex items-center gap-2 font-black font-bauhaus text-sm uppercase">
-                  <AlertTriangle className="w-5 h-5 text-[#FF3366]" />
+            <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-200">
+              <div className="bg-[#FFB800] p-4 sm:p-5 rounded-2xl border-neo shadow-neo text-slate-950 space-y-2.5 sm:space-y-3">
+                <div className="flex items-center gap-2 font-black font-bauhaus text-xs sm:text-sm uppercase">
+                  <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF3366] shrink-0" />
                   <span>Achtung! الفخ الكلاسيكي للمغاربة</span>
                 </div>
 
-                <div className="flex items-start gap-4 bg-white p-4 rounded-xl border-2 border-slate-950">
-                  <UmlautMonster reaction="shocked" size={60} />
-                  <div className="space-y-1">
-                    <h3 className="font-bold text-sm font-arabic text-slate-950">
-                      رد بالك من المقارنة الحرفية مع الدارجة أو الفرنسية!
+                <div className="flex items-start gap-3 bg-white p-3.5 sm:p-4 rounded-xl border-2 border-slate-950">
+                  <UmlautMonster reaction="shocked" size={48} className="shrink-0" />
+                  <div className="space-y-1 min-w-0">
+                    <h3 className="font-bold text-xs sm:text-sm font-arabic text-slate-950">
+                      رد بالك من المقارنة مع الفرنسية أو الدارجة!
                     </h3>
-                    <p className="text-xs text-slate-700 font-arabic leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-slate-700 font-arabic leading-relaxed">
                       {module.slides[2]?.highlightedRule
                         ? getActiveText(module.slides[2]?.highlightedRule)
                         : language === 'darija'
@@ -381,20 +381,20 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
 
           {/* ================= STEP 4: INTERACTIVE QUIZ ================= */}
           {currentStep === 3 && (
-            <div className="space-y-4 animate-in fade-in duration-200">
-              <div className="bg-white p-5 rounded-2xl border-neo shadow-neo-sm space-y-4">
+            <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-200">
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border-neo shadow-neo-sm space-y-3 sm:space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-slate-500 uppercase">
+                  <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-500 uppercase">
                     Challenge Question
                   </span>
                   <UmlautMonster
                     reaction={!isQuizSubmitted ? 'neutral' : isCorrect ? 'happy' : 'shocked'}
-                    size={48}
+                    size={40}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="text-sm sm:text-base font-extrabold text-slate-950 font-arabic">
+                  <h3 className="text-xs sm:text-base font-extrabold text-slate-950 font-arabic">
                     {language === 'darija'
                       ? quizSlide?.quiz?.questionDarija || 'كيفاش كيتنطق حرف W فـ الألمانية؟'
                       : language === 'ar'
@@ -434,11 +434,11 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
                         type="button"
                         disabled={isQuizSubmitted}
                         onClick={() => handleSelectQuiz(opt.id, opt.isCorrect)}
-                        className={`w-full p-3.5 rounded-xl border-neo-2 text-left rtl:text-right font-bold text-xs sm:text-sm font-arabic transition-all flex items-center justify-between cursor-pointer ${btnColor}`}
+                        className={`w-full p-3 sm:p-3.5 rounded-xl border-neo-2 text-left rtl:text-right font-bold text-xs sm:text-sm font-arabic transition-all flex items-center justify-between cursor-pointer min-h-[46px] ${btnColor}`}
                       >
                         <span>{opt.label}</span>
                         {isQuizSubmitted && opt.isCorrect && (
-                          <CheckCircle2 className="w-4 h-4 text-slate-950" />
+                          <CheckCircle2 className="w-4 h-4 text-slate-950 shrink-0" />
                         )}
                       </button>
                     );
@@ -464,13 +464,13 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
           )}
         </div>
 
-        {/* Bottom Navigation Buttons */}
-        <div className="p-4 bg-white border-t-2.5 border-slate-900 flex items-center justify-between gap-3 shrink-0">
+        {/* Bottom Thumb Action Bar: Pinned with large touch targets */}
+        <div className="p-3 sm:p-4 bg-white border-t-2.5 border-slate-900 flex items-center justify-between gap-2.5 shrink-0">
           <button
             type="button"
             onClick={handlePrev}
             disabled={currentStep === 0}
-            className="btn-neo py-2.5 px-4 rounded-xl bg-white text-slate-950 font-bold text-xs font-arabic cursor-pointer disabled:opacity-40"
+            className="btn-neo py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-xl bg-white text-slate-950 font-bold text-xs font-arabic cursor-pointer disabled:opacity-40 min-h-[44px]"
           >
             السابق
           </button>
@@ -478,10 +478,10 @@ export const CleanLessonPlayer: React.FC<CleanLessonPlayerProps> = ({
           <button
             type="button"
             onClick={handleNext}
-            className="btn-neo py-2.5 px-6 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-extrabold text-xs sm:text-sm font-arabic inline-flex items-center gap-2 cursor-pointer"
+            className="btn-neo py-2 sm:py-2.5 px-5 sm:px-6 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-extrabold text-xs sm:text-sm font-arabic inline-flex items-center justify-center gap-2 cursor-pointer flex-1 sm:flex-none min-h-[44px]"
           >
             <span>{currentStep === 3 ? 'إنهاء الدرس وربح XP 🏆' : 'التالي'}</span>
-            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            <ArrowRight className="w-4 h-4 rtl:rotate-180 shrink-0" />
           </button>
         </div>
       </div>

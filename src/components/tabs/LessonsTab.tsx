@@ -95,9 +95,9 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* 1. World Filter Tabs (Rich Tactile Neo-Brutalist Tabs) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
         {levelConfigs.map((cfg) => {
           const isSelected = currentLevel === cfg.id;
           const completedCount = CURRICULUM_MODULES.filter(
@@ -117,19 +117,19 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
                 backgroundColor: isSelected ? cfg.color : '#FFFFFF',
                 color: isSelected ? '#FFFFFF' : '#111827',
               }}
-              className="btn-neo p-2.5 sm:p-3 rounded-2xl flex flex-col items-center justify-between text-center gap-1 cursor-pointer transition-all"
+              className="btn-neo p-2 sm:p-3 rounded-2xl flex flex-col items-center justify-between text-center gap-1 cursor-pointer transition-all"
             >
               <div className="flex items-center gap-1.5 font-black text-xs sm:text-sm font-bauhaus">
                 <span>{cfg.id}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-md font-mono ${
+                  className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-md font-mono ${
                     isSelected ? 'bg-black/25 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
                   {completedCount}/{totalCount}
                 </span>
               </div>
-              <span className="text-[11px] font-bold font-arabic line-clamp-1">
+              <span className="text-[10px] sm:text-[11px] font-bold font-arabic line-clamp-1">
                 {language === 'en'
                   ? cfg.labelEnglish.split(':')[1]?.trim()
                   : language === 'ar'
@@ -142,39 +142,38 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
       </div>
 
       {/* 2. World Banner & Milestone Header */}
-      <div className="bg-white p-4 sm:p-5 rounded-3xl border-neo shadow-neo flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
+      <div className="bg-white p-3.5 sm:p-5 rounded-3xl border-neo shadow-neo flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           <div
-            className="w-12 h-12 rounded-2xl border-neo flex items-center justify-center shrink-0 shadow-neo-sm"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl border-neo flex items-center justify-center shrink-0 shadow-neo-sm"
             style={{ backgroundColor: currentConfig.color }}
           >
-            <currentConfig.icon className="w-6 h-6 text-white" />
+            <currentConfig.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
-          <div>
-            <h2 className="text-base sm:text-lg font-black text-slate-950 font-arabic">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-sm sm:text-lg font-black text-slate-950 font-arabic truncate">
               {getLevelLabel(currentConfig)}
             </h2>
-            <div className="flex items-center gap-2 text-xs text-slate-600 font-mono mt-0.5">
-              <MapPin className="w-3.5 h-3.5 text-[#FF3366]" />
-              <span>Route: {currentConfig.checkpoint}</span>
+            <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 font-mono mt-0.5 truncate">
+              <MapPin className="w-3 h-3 text-[#FF3366] shrink-0" />
+              <span className="truncate">Route: {currentConfig.checkpoint}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-end sm:self-auto">
-          <span className="text-xs font-mono font-bold text-slate-700 bg-[#F6F2EA] px-3 py-1.5 rounded-xl border border-slate-900/20">
+        <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-700 bg-[#F6F2EA] px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-900/20">
             {modules.filter((m) => completedModuleIds.includes(m.id)).length} of {modules.length}{' '}
-            Completed
+            Done
           </span>
         </div>
       </div>
 
       {/* 3. The "Casa-to-Berlin" Winding Roadtrip Transit Map */}
-      <div className="relative py-4">
-        {/* Continuous Sinuous SVG Transit Road Path in Background */}
-        <div className="absolute inset-y-0 left-6 sm:left-1/2 -translate-x-1/2 w-16 pointer-events-none hidden sm:block">
+      <div className="relative py-2 sm:py-4">
+        {/* DESKTOP (sm+): Continuous Center Sinuous SVG Transit Road Path */}
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none hidden sm:block">
           <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 60 800">
-            {/* Outer road border */}
             <path
               d="M30 0 Q 55 100, 30 200 T 30 400 T 30 600 T 30 800"
               fill="none"
@@ -182,7 +181,6 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
               strokeWidth="10"
               strokeLinecap="round"
             />
-            {/* Inner road asphalt */}
             <path
               d="M30 0 Q 55 100, 30 200 T 30 400 T 30 600 T 30 800"
               fill="none"
@@ -190,7 +188,6 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
               strokeWidth="5"
               strokeLinecap="round"
             />
-            {/* Animated white dash route */}
             <path
               d="M30 0 Q 55 100, 30 200 T 30 400 T 30 600 T 30 800"
               fill="none"
@@ -202,8 +199,22 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
           </svg>
         </div>
 
+        {/* MOBILE (<sm): Anchored Vertical Transit Rail Track along the side */}
+        <div
+          className={`sm:hidden absolute top-0 bottom-0 pointer-events-none w-8 flex flex-col items-center ${
+            isRtl ? 'right-1.5' : 'left-1.5'
+          }`}
+        >
+          {/* Continuous vertical asphalt road strip */}
+          <div className="w-2.5 h-full bg-[#111827] rounded-full relative flex items-center justify-center">
+            {/* Inner Saffron strip with dashes */}
+            <div className="w-1 h-full bg-[#FFB800] rounded-full" />
+            <div className="absolute inset-y-0 w-0.5 border-r border-dashed border-white" />
+          </div>
+        </div>
+
         {/* Lesson Waypoint Bento Cards */}
-        <div className="space-y-5 relative z-10">
+        <div className="space-y-4 sm:space-y-5 relative z-10">
           {modules.map((m, index) => {
             const isDone = completedModuleIds.includes(m.id);
             const isEven = index % 2 === 0;
@@ -211,11 +222,11 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
             return (
               <div
                 key={m.id}
-                className={`relative flex flex-col sm:flex-row items-center gap-4 ${
+                className={`relative flex flex-col sm:flex-row items-center gap-3 sm:gap-4 ${
                   isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
                 }`}
               >
-                {/* Milestone Node on Transit Line */}
+                {/* DESKTOP Milestone Node on Center Transit Line */}
                 <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full border-neo bg-white items-center justify-center shadow-neo-sm">
                   {isDone ? (
                     <CheckCircle2 className="w-5 h-5 text-[#00D68F] fill-[#00D68F]/20" />
@@ -226,36 +237,51 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
                   )}
                 </div>
 
-                {/* Rich Tactile Bento Card */}
+                {/* MOBILE Milestone Node on Side Transit Rail */}
                 <div
-                  onClick={() => handleStartLesson(m)}
-                  className={`w-full sm:w-[calc(50%-2rem)] bg-white p-4 sm:p-5 rounded-3xl border-neo shadow-neo card-neo-hover cursor-pointer transition-all ${
-                    isDone ? 'border-[#00D68F]' : ''
+                  className={`sm:hidden absolute top-4 z-20 w-7 h-7 rounded-full border-neo bg-white flex items-center justify-center shadow-neo-sm ${
+                    isRtl ? 'right-0' : 'left-0'
                   }`}
                 >
+                  {isDone ? (
+                    <CheckCircle2 className="w-4 h-4 text-[#00D68F] fill-[#00D68F]/20" />
+                  ) : (
+                    <span className="text-[10px] font-black font-mono text-slate-900">
+                      {m.moduleNumber}
+                    </span>
+                  )}
+                </div>
+
+                {/* Rich Tactile Bento Card (Full-width on mobile with side inset for transit track) */}
+                <div
+                  onClick={() => handleStartLesson(m)}
+                  className={`w-full sm:w-[calc(50%-2rem)] bg-white p-3.5 sm:p-5 rounded-3xl border-neo shadow-neo card-neo-hover cursor-pointer transition-all ${
+                    isRtl ? 'mr-8 sm:mr-0' : 'ml-8 sm:ml-0'
+                  } ${isDone ? 'border-[#00D68F]' : ''}`}
+                >
                   {/* Top Bar: Lesson Badge + XP Tag */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="w-7 h-7 rounded-xl bg-slate-950 text-white flex items-center justify-center text-xs font-black font-mono">
+                      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-slate-950 text-white flex items-center justify-center text-[10px] sm:text-xs font-black font-mono">
                         #{m.moduleNumber}
                       </span>
-                      <span className="text-[11px] font-mono font-bold text-slate-600 uppercase">
+                      <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-600 uppercase">
                         Station {index + 1}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#FFB800] border-neo-2 shadow-neo-sm text-slate-950 font-black text-xs font-mono">
-                      <ZelligeStar size={12} color="#111827" />
+                    <div className="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-xl bg-[#FFB800] border-neo-2 shadow-neo-sm text-slate-950 font-black text-[11px] sm:text-xs font-mono">
+                      <ZelligeStar size={11} color="#111827" />
                       <span>+{m.xpReward} XP</span>
                     </div>
                   </div>
 
                   {/* German Title & Cultural Subtitle */}
-                  <div className="space-y-1 mb-4">
+                  <div className="space-y-1 mb-3 sm:mb-4">
                     <div className="flex items-center gap-2">
                       <bdi
                         dir="ltr"
-                        className="font-black text-slate-950 text-base sm:text-lg font-bauhaus tracking-tight"
+                        className="font-black text-slate-950 text-sm sm:text-lg font-bauhaus tracking-tight"
                       >
                         {m.titleGerman}
                       </bdi>
@@ -266,10 +292,10 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
                   </div>
 
                   {/* Bottom Action Strip */}
-                  <div className="flex items-center justify-between pt-3 border-t-2 border-slate-900/10">
-                    <div className="flex items-center gap-1.5 text-xs font-mono text-slate-600">
+                  <div className="flex items-center justify-between pt-2.5 sm:pt-3 border-t-2 border-slate-900/10">
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-slate-600">
                       <span className="w-2 h-2 rounded-full bg-[#00D68F]" />
-                      <span>{m.slides?.length || 4} Interactive Steps</span>
+                      <span>{m.slides?.length || 4} Steps</span>
                     </div>
 
                     <button
@@ -278,7 +304,7 @@ export const LessonsTab: React.FC<LessonsTabProps> = ({
                         e.stopPropagation();
                         handleStartLesson(m);
                       }}
-                      className="btn-neo py-1.5 px-3.5 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-xs font-arabic inline-flex items-center gap-1.5 cursor-pointer"
+                      className="btn-neo py-1.5 px-3 sm:px-3.5 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-xs font-arabic inline-flex items-center gap-1.5 cursor-pointer min-h-[38px] sm:min-h-[40px]"
                     >
                       <span>
                         {isDone
